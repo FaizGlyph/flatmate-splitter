@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Flatmate Splitter</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- 🔥 HEADER + NAV -->
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h1>flatmate <span>splitter</span></h1>
+
+        <!-- RIGHT SIDE BUTTONS -->
+        <div style="display:flex; gap:10px;">
+
+            <!-- 👥 Flatmates -->
+            <a href="/flatmates" style="
+                text-decoration:none;
+                background:#00c896;
+                color:black;
+                padding:10px 15px;
+                border-radius:8px;
+                font-weight:bold;">
+                👥 Flatmates
+            </a>
+
+            <!-- 💰 Balances (NEW PAGE) -->
+            <a href="/balances" style="
+                text-decoration:none;
+                background:#ffaa00;
+                color:black;
+                padding:10px 15px;
+                border-radius:8px;
+                font-weight:bold;">
+                💰 Balances
+            </a>
+
+        </div>
+    </div>
+
+    <!-- CARDS -->
+    <div class="cards">
+        <div class="card">
+            <p>Total Spent</p>
+            <h2>₹<span th:text="${total}"></span></h2>
+        </div>
+
+        <div class="card">
+            <p>Expenses</p>
+            <h2 th:text="${#lists.size(expenses)}"></h2>
+        </div>
+
+        <div class="card">
+            <p>Flatmates</p>
+            <!-- ✅ FIXED COUNT -->
+            <h2 th:text="${flatmateCount}"></h2>
+        </div>
+    </div>
+
+    <!-- ADD EXPENSE -->
+    <div class="box">
+        <h2>Add Expense</h2>
+
+        <form action="/addExpense" method="post">
+            <input name="description" placeholder="Description">
+            <input name="amount" placeholder="Amount">
+
+            <!-- ✅ DROPDOWN -->
+            <select name="paidBy" required>
+                <option value="">Select who paid</option>
+
+                <option th:each="f : ${flatmates}"
+                        th:value="${f.name}"
+                        th:text="${f.name}">
+                </option>
+            </select>
+
+            <button>Add</button>
+        </form>
+    </div>
+
+    <!-- EXPENSE LIST -->
+    <div class="box">
+        <h2>Expenses</h2>
+
+        <div th:each="e : ${expenses}" class="expense">
+            <p><b th:text="${e.description}"></b></p>
+            <p>₹<span th:text="${e.amount}"></span></p>
+            <p>Paid by <span th:text="${e.paidBy}"></span></p>
+        </div>
+    </div>
+
+    <!-- FLATMATES -->
+    <div class="box">
+        <h2>Flatmates</h2>
+
+        <div class="flatmates">
+
+            <div th:each="entry : ${status}" class="flatmate-card">
+
+                <div class="avatar">
+                    <span th:text="${#strings.substring(entry.key,0,1).toUpperCase()}"></span>
+                </div>
+
+                <div>
+                    <p class="name" th:text="${entry.key}"></p>
+                    <p class="status" th:text="${entry.value}"></p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SETTLEMENT -->
+    <div class="box">
+        <h2>Settle Up</h2>
+
+        <div th:each="s : ${settlements}">
+            <p th:text="${s}"></p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

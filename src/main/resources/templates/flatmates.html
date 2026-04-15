@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Flatmates</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>👥 Flatmates</h1>
+
+    <!-- ADD FLATMATE -->
+    <div class="box">
+        <h2>Add Flatmate</h2>
+
+        <form action="/addFlatmate" method="post">
+            <input name="name" placeholder="Enter name">
+            <button>Add</button>
+        </form>
+    </div>
+
+    <!-- LIST -->
+    <div class="box">
+        <h2>All Flatmates</h2>
+
+        <div class="flatmates">
+
+            <div th:each="f : ${flatmates}" class="flatmate-card">
+
+                <div class="avatar">
+                    <span th:text="${#strings.substring(f.name,0,1).toUpperCase()}"></span>
+                </div>
+
+                <div>
+                    <p class="name" th:text="${f.name}"></p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <br>
+    <a href="/dashboard">⬅ Back to Dashboard</a>
+
+</div>
+
+</body>
+</html>

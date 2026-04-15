@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Balances</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>💰 Balances</h1>
+
+    <!-- STATUS -->
+    <div class="box">
+        <h2>Who Owes / Gets</h2>
+
+        <div class="flatmates">
+
+            <div th:each="entry : ${status}" class="flatmate-card">
+
+                <div class="avatar">
+                    <span th:text="${#strings.substring(entry.key,0,1).toUpperCase()}"></span>
+                </div>
+
+                <div>
+                    <p class="name" th:text="${entry.key}"></p>
+                    <p class="status" th:text="${entry.value}"></p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SETTLE -->
+    <div class="box">
+        <h2>Settle Up</h2>
+
+        <div th:each="s : ${settlements}">
+            <p th:text="${s}"></p>
+        </div>
+    </div>
+
+    <br>
+    <a href="/dashboard">⬅ Back</a>
+
+</div>
+
+</body>
+</html>
